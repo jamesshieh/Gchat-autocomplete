@@ -40,7 +40,7 @@ class GchatImporter
     end
     imap.logout
   end
- 
+
   def parse_raw_chat_emails
     @raw_chat_emails.each do |body|
       body.split("\r\n").each do |line|
@@ -49,14 +49,14 @@ class GchatImporter
         @flag = 1 if line == @current_heading
         @current_heading = line unless line.scan(/\-\-\-\-\-\-\=.*/).empty?
       end
+      @messages << '\n >'
     end
     @messages.map!{ |line| line.scan(/(?<=\>).*?(?=\<)/).delete_if(&:empty?)}
     @messages.each{ |line| line.map!{ |chat| chat if chat.scan(/\&nbsp\;/).empty? }}
   end
 
-  def export_training_data(filename = 'training_data.txt')
+  def export_training_data(filename = 'data/training_data.txt')
     file = File.new(filename, "w+")
-    pry
     @messages.each do |line|
       file.puts(line) unless line.empty?
     end
