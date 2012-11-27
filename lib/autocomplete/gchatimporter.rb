@@ -51,7 +51,7 @@ class GchatImporter
       end
       @messages << '\n >'
     end
-    @messages.map!{ |line| line.scan(/(?<=\>).*?(?=\<)/).delete_if(&:empty?)}
+    @messages.map!{ |line| line.scan(/(?<=\>).+?(?=\<)/).delete_if(&:empty?)}
     @messages.each{ |line| line.map!{ |chat| chat if chat.scan(/\&nbsp\;/).empty? }}
   end
 
