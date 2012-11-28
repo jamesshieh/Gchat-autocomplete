@@ -5,7 +5,7 @@ class GchatParser
   end
 
   def training_set
-    @training_set ||= parse_sentences
+    @training_set ||= parse_words
   end
 
   private
@@ -25,4 +25,22 @@ class GchatParser
     chat_lines.reject!{ |line| line == ""}
     chat_lines.map!{ |line| line.split(" ") }
   end
+
+  def parse_words
+    text = @file.readlines
+    text = text.join.downcase
+    text.gsub!(/me\n\: /, '< ')
+    text.gsub!(/\w+?\n\: /, '> ')
+    text.gsub!(/\d+? minutes/, '')
+    text.gsub!(/\&\#39\;/, '\'')
+    text.gsub!(/\&quot\;/, '')
+    text.gsub!(/[\.\,\;\:\?]/, '')
+    text.gsub!(/\n/, ' ')
+    chat_lines = text.scan(/(?<=\<).+?(?=\>)/m)
+    chat_lines.flatten!
+    chat_lines.reject!{ |line| line == ""}
+    chat_lines.map!{ |line| line.split(" ") }
+    chat_lines.flatten!
+  end
+
 end

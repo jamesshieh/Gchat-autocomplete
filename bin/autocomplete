@@ -3,15 +3,35 @@
 $LOAD_PATH.unshift(File.expand_path(File.join(File.dirname(__FILE__),".." , "lib")))
 require 'autocomplete'
 
-puts 'Enter Gmail Account:'
-username = gets.chomp
-puts 'Enter Password:'
-password = gets.chomp
+#puts 'Enter Gmail Account:'
+#username = gets.chomp
+#puts 'Enter Password:'
+#password = gets.chomp
+#
+#username = 'randomletters13@gmail.com'
+#password = 'gjluhplxgaspjpsl'
 
-username = 'randomletters13@gmail.com'
-password = 'gjluhplxgaspjpsl'
+#gchat_importer = GchatImporter.new(username, password)
+#gchat_importer.train_x_days(90)
+#
+train = Train.new
+train.train
+tree = train.roots
+test = gets.chomp
+new = train.generate_word(tree[test].children)
+50.times do
+  puts new
+  new = train.generate_word(tree[new].children)
+end
+while true
+  word = gets.chomp
+  child = gets.chomp
+  puts "Freq: #{tree[word].children[child].freq}"
+  total = 0
+  tree[word].children.each do |key, value|
+    puts "Word: #{key}, Freq: #{value.freq}"
+    total += value.freq
+  end
+  puts "Out of total: #{total}"
 
-gchat_importer = GchatImporter.new(username, password)
-gchat_importer.train_x_days(1)
-
-
+end
