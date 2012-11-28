@@ -7,9 +7,6 @@ require 'autocomplete'
 #username = gets.chomp
 #puts 'Enter Password:'
 #password = gets.chomp
-#
-#username = 'randomletters13@gmail.com'
-#password = 'gjluhplxgaspjpsl'
 
 #gchat_importer = GchatImporter.new(username, password)
 #gchat_importer.train_x_days(90)
