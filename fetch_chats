@@ -2,24 +2,26 @@
 
 $LOAD_PATH.unshift(File.expand_path(File.join(File.dirname(__FILE__),".." , "lib")))
 require 'autocomplete'
-puts "Training data ..."
+
+puts 'Enter Gmail Account:'
+username = gets.chomp
+puts 'Enter Password:'
+password = gets.chomp
+
+gchat_importer = GchatImporter.new(username, password)
+gchat_importer.train_x_days(90)
+
 train = Train.new
 train.train
 tree = train.roots
-puts "Input the seed word:"
-first = gets.chomp
-new = train.generate_word(tree[first].children)
+test = gets.chomp
+new = train.generate_word(tree[test].children)
 50.times do
-  print " " + new
+  puts new
   new = train.generate_word(tree[new].children)
 end
-puts
-
 while true
-  puts "You may continue to enter words to see frequencies:"
-  puts "Input starting word:"
   word = gets.chomp
-  puts "Input ending word:"
   child = gets.chomp
   puts "Freq: #{tree[word].children[child].freq}"
   total = 0

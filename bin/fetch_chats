@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift(File.expand_path(File.join(File.dirname(__FILE__),".." , "lib")))
+require 'autocomplete'
+
+puts 'Enter Gmail Account:'
+username = gets.chomp
+puts 'Enter Password:'
+password = gets.chomp
+
+gchat_importer = GchatImporter.new(username, password)
+gchat_importer.train_x_days(90)
+
